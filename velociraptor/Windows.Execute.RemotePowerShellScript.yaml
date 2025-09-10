@@ -1,27 +1,21 @@
 name: Windows.Execute.RemotePowerShellScript
 description: |
-  Downloads and executes a specified PowerShell script from a GitHub repository.
+  Downloads and executes a specified PowerShell script from a full raw URL.
   Supports up to 6 arguments, injected directly as variables for the script.
   Captures stdout/stderr/status and returns the OSSEC active-responses.log.
 author: socfortress
 type: CLIENT
 
 parameters:
-  - name: RepoURL
+  - name: ScriptURL
     type: string
-    default: https://raw.githubusercontent.com/socfortress/WINDOWS-FIREWALL-IP-UNBLOCK-ACTIVERESPONSE/main
-    description: Base URL of the raw GitHub repository.
-
-  - name: ScriptName
-    type: string
-    default: firewall-ip-unblock.ps1
-    description: PowerShell script filename to fetch and execute.
+    default: https://raw.githubusercontent.com/socfortress/WINDOWS-FIREWALL-IP-UNBLOCK-ACTIVERESPONSE/main/firewall-ip-unblock.ps1
+    description: Full raw URL to the PowerShell script (e.g., GitHub raw link).
 
   - name: Arg1
     type: string
     default: ""
     description: Optional first argument (maps to $Arg1 in the script).
-
   - name: Arg2
     type: string
     default: ""
@@ -40,23 +34,24 @@ parameters:
 
 sources:
   - name: ScriptExecution
-    description: Download, save, and execute the PowerShell script with dynamic arguments.
+    description: Download, save, and execute the PowerShell script from a full URL with dynamic arguments.
     query: |
-      LET script_url = RepoURL + ScriptName
-
       SELECT timestamp(epoch=now()),
              Stdout,
              Stderr,
              Status,
-             script_url AS SourceScript
+             ScriptURL AS SourceScript
       FROM execve(
         argv=[
           "powershell.exe",
           "-ExecutionPolicy","Bypass",
           "-NoProfile",
           "-Command",
-          "$script = Invoke-RestMethod -Uri '" + script_url + "'; " +
-          "$temp = Join-Path $env:TEMP '" + ScriptName + "'; " +
+          "$url = '" + ScriptURL + "'; " +
+          "$script = Invoke-RestMethod -Uri $url; " +
+          "$name = [System.IO.Path]::GetFileName(([System.Uri]$url).AbsolutePath); " +
+          "if (-not $name) { $name = 'remote.ps1' }; " +
+          "$temp = Join-Path $env:TEMP $name; " +
           "Set-Content -Path $temp -Value $script -Force; " +
           "$Arg1='" + Arg1 + "'; " +
           "$Arg2='" + Arg2 + "'; " +
