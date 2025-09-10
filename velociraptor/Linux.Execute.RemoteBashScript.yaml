@@ -1,33 +1,25 @@
 name: Linux.Execute.RemoteBashScript
 description: |
-  Downloads and executes a Bash script from a GitHub repository.
-  Supports up to 6 arguments, exported as environment variables (ARG1–ARG6) for the script.
+  Downloads and executes a Bash script from a full raw URL.
+  Supports up to 6 arguments, exported as environment variables (ARG1–ARG6).
   Always runs via `bash` explicitly to avoid shebang or CRLF issues.
   Captures stdout, stderr, exit status, and the full active-responses.log for later processing.
 author: socfortress
 type: CLIENT
 
 parameters:
-  - name: RepoURL
+  - name: ScriptURL
     type: string
-    description: Base URL of raw GitHub repo (e.g., https://raw.githubusercontent.com/socfortress/Repo-to-hold-linux-activeresponse/main)
-    default: https://raw.githubusercontent.com/socfortress/Repo-to-hold-linux-activeresponse/main
-
-  - name: ScriptName
-    type: string
-    description: Bash script to fetch and execute (e.g., block-unblock-ip.sh)
-    default: collect-suspicious-users-groups.sh
+    description: Full raw URL to the Bash script (e.g., GitHub raw link)
+    default: https://raw.githubusercontent.com/socfortress/Repo-to-hold-linux-activeresponse/main/collect-suspicious-users-groups.sh
 
   - name: Arg1
     type: string
     default: ""
     description: Optional first argument (exported as ARG1).
-
   - name: Arg2
     type: string
     default: ""
-    description: Optional second argument (exported as ARG2).
-
   - name: Arg3
     type: string
     default: ""
@@ -43,22 +35,23 @@ parameters:
 
 sources:
   - name: ScriptExecution
-    description: Download, save, export arguments, and run the Bash script explicitly.
+    description: Download to a temp file, export arguments, and run the Bash script explicitly.
     query: |
-      LET script_url = RepoURL + ScriptName
-
       SELECT timestamp(epoch=now()),
              Stdout,
              Stderr,
              Status,
-             script_url AS SourceScript
+             ScriptURL AS SourceScript
       FROM execve(
         argv=[
           "bash",
           "-c",
-          "curl -s -o /tmp/" + ScriptName + " " + script_url + " && chmod +x /tmp/" + ScriptName + "; " +
+          "set -euo pipefail; " +
+          "tmp=$(mktemp /tmp/remote-XXXXXX.sh); " +
+          "curl -fsSL '" + ScriptURL + "' -o \"$tmp\"; " +
+          "chmod +x \"$tmp\"; " +
           "export ARG1='" + Arg1 + "' ARG2='" + Arg2 + "' ARG3='" + Arg3 + "' ARG4='" + Arg4 + "' ARG5='" + Arg5 + "' ARG6='" + Arg6 + "'; " +
-          "bash /tmp/" + ScriptName
+          "bash \"$tmp\""
         ]
       )
 
@@ -66,5 +59,5 @@ sources:
     description: Return the full active-responses.log for offline processing.
     query: |
       SELECT timestamp(epoch=now()),
-             read_file(filename="/var/ossec/active-response/active-responses.log") AS LogContent
+             read_file(filename="/var/ossec/logs/active-responses.log") AS LogContent
       FROM scope()
