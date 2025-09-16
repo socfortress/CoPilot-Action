@@ -88,20 +88,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "EDR"
-      ],
-      "targetBlank": true,
-      "title": "",
-      "type": "dashboards"
-    }
-  ],
+  "links": [],
   "liveNow": false,
   "panels": [
     {
@@ -189,7 +176,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -209,7 +196,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "center",
+            "align": "left",
             "cellOptions": {
               "type": "auto"
             },
@@ -471,11 +458,47 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_hash"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 583
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_killed"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 107
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_path"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 483
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 7,
         "x": 4,
         "y": 0
@@ -492,12 +515,7 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Date/Time"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "11.1.3",
       "targets": [
@@ -516,7 +534,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -534,7 +552,7 @@
           "options": {
             "include": {
               "names": [
-                "data_ip"
+                "data_hash"
               ]
             }
           }
@@ -1001,7 +1019,7 @@
             },
             "renameByName": {
               "_id": "EVENT ID",
-              "data_ip": "Blocked IP List",
+              "data_hash": "KILLED PROCESSES",
               "rule_id": "RULE ID",
               "rule_mitre_tactic": "MITRE TACTIC",
               "rule_mitre_technique": "MITRE TECHNIQUE",
@@ -1020,7 +1038,7 @@
       },
       "editable": true,
       "gridPos": {
-        "h": 20,
+        "h": 22,
         "w": 13,
         "x": 11,
         "y": 0
@@ -1054,7 +1072,7 @@
               "type": "logs"
             }
           ],
-          "query": "data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1186,7 +1204,7 @@
               "type": "max"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1346,7 +1364,7 @@
         "h": 7,
         "w": 7,
         "x": 4,
-        "y": 6
+        "y": 8
       },
       "id": 2,
       "options": {
@@ -1389,7 +1407,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1438,7 +1456,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 9,
         "w": 4,
         "x": 0,
         "y": 13
@@ -1493,7 +1511,7 @@
               "type": "cardinality"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1626,7 +1644,7 @@
         "h": 7,
         "w": 7,
         "x": 4,
-        "y": 13
+        "y": 15
       },
       "id": 5,
       "options": {
@@ -1648,7 +1666,7 @@
           "bucketAggs": [
             {
               "fake": true,
-              "field": "data_status",
+              "field": "rule_groups",
               "id": "4",
               "settings": {
                 "min_doc_count": 1,
@@ -1670,7 +1688,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1734,8 +1752,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1747,10 +1764,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
+        "h": 12,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 22
       },
       "id": 7,
       "options": {
@@ -1799,7 +1816,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2080,6 +2097,42 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_hash"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 583
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_killed"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 107
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_path"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 483
+              }
+            ]
           }
         ]
       },
@@ -2087,7 +2140,7 @@
         "h": 16,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 34
       },
       "id": 13,
       "options": {
@@ -2101,12 +2154,7 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Date/Time"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "11.1.3",
       "targets": [
@@ -2125,7 +2173,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:UFW-Block-IP AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:kill_process_by_hash AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2143,14 +2191,10 @@
           "options": {
             "include": {
               "names": [
-                "timestamp",
-                "_id",
-                "agent_ip",
-                "agent_name",
-                "data_status",
-                "data_reason",
-                "data_ip",
-                "data_host"
+                "data_hash",
+                "data_killed",
+                "data_path",
+                "data_pid"
               ]
             }
           }
@@ -2726,8 +2770,8 @@
     ]
   },
   "timezone": "",
-  "title": "LINUX-UFW-IP-BLOCK-COPILOT-ACTION",
-  "uid": "098b599e-ee4c-4ff4-92e5-788fa0fdcb83",
-  "version": 5,
+  "title": "WINDOWS-KILL-PROCESS-BYHASH-COPILOT-ACTION",
+  "uid": "5e24dbd6-9fcc-4bd5-8e58-c53cb6da032d",
+  "version": 7,
   "weekStart": ""
 }

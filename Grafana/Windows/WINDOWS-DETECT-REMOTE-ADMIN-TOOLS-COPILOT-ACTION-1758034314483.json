@@ -88,20 +88,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "EDR"
-      ],
-      "targetBlank": true,
-      "title": "",
-      "type": "dashboards"
-    }
-  ],
+  "links": [],
   "liveNow": false,
   "panels": [
     {
@@ -189,7 +176,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -475,7 +462,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 11,
         "w": 7,
         "x": 4,
         "y": 0
@@ -516,7 +503,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -534,8 +521,7 @@
           "options": {
             "include": {
               "names": [
-                "data_exe",
-                "data_pid"
+                "data_path"
               ]
             }
           }
@@ -988,6 +974,7 @@
               "windows_event_severity": true,
               "windows_logon_type": true
             },
+            "includeByName": {},
             "indexByName": {
               "_id": 1,
               "agent_ip": 3,
@@ -1001,6 +988,7 @@
             },
             "renameByName": {
               "_id": "EVENT ID",
+              "data_path": "APP PATH",
               "rule_id": "RULE ID",
               "rule_mitre_tactic": "MITRE TACTIC",
               "rule_mitre_technique": "MITRE TECHNIQUE",
@@ -1019,7 +1007,7 @@
       },
       "editable": true,
       "gridPos": {
-        "h": 23,
+        "h": 25,
         "w": 13,
         "x": 11,
         "y": 0
@@ -1053,7 +1041,7 @@
               "type": "logs"
             }
           ],
-          "query": "data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1185,7 +1173,7 @@
               "type": "max"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1345,7 +1333,7 @@
         "h": 7,
         "w": 7,
         "x": 4,
-        "y": 9
+        "y": 11
       },
       "id": 2,
       "options": {
@@ -1388,7 +1376,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1437,7 +1425,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 12,
         "w": 4,
         "x": 0,
         "y": 13
@@ -1492,7 +1480,7 @@
               "type": "cardinality"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:List-Listening-Ports AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1625,7 +1613,7 @@
         "h": 7,
         "w": 7,
         "x": 4,
-        "y": 16
+        "y": 18
       },
       "id": 5,
       "options": {
@@ -1647,7 +1635,7 @@
           "bucketAggs": [
             {
               "fake": true,
-              "field": "data_pid",
+              "field": "rule_groups",
               "id": "4",
               "settings": {
                 "min_doc_count": 1,
@@ -1669,7 +1657,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1748,7 +1736,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 25
       },
       "id": 7,
       "options": {
@@ -1797,7 +1785,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2082,10 +2070,10 @@
         ]
       },
       "gridPos": {
-        "h": 11,
+        "h": 16,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 36
       },
       "id": 13,
       "options": {
@@ -2123,7 +2111,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Remote-Admin-Tools AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2145,10 +2133,8 @@
                 "_id",
                 "agent_ip",
                 "agent_name",
-                "data_pid",
-                "data_cmd",
-                "data_exe",
-                "data_reason"
+                "data_name",
+                "data_path"
               ]
             }
           }
@@ -2724,8 +2710,8 @@
     ]
   },
   "timezone": "",
-  "title": "LINUX-DETECT-UNSIGNED-PROCESSES-COPILOT-ACTION",
-  "uid": "e78bc81c-16e9-47ea-bdf8-b4ccf3cf75d5",
-  "version": 5,
+  "title": "WINDOWS-DETECT-REMOTE-ADMIN-TOOLS-COPILOT-ACTION",
+  "uid": "c70bb63b-8656-461d-b00c-b3f056674e77",
+  "version": 9,
   "weekStart": ""
 }

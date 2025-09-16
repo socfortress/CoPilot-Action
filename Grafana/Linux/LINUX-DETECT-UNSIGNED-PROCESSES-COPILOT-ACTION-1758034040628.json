@@ -88,20 +88,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "EDR"
-      ],
-      "targetBlank": true,
-      "title": "",
-      "type": "dashboards"
-    }
-  ],
+  "links": [],
   "liveNow": false,
   "panels": [
     {
@@ -189,7 +176,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -209,7 +196,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
+            "align": "center",
             "cellOptions": {
               "type": "auto"
             },
@@ -471,23 +458,11 @@
                 ]
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "data_flag"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 262
-              }
-            ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 7,
         "x": 4,
         "y": 0
@@ -504,7 +479,12 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Date/Time"
+          }
+        ]
       },
       "pluginVersion": "11.1.3",
       "targets": [
@@ -523,7 +503,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -541,7 +521,8 @@
           "options": {
             "include": {
               "names": [
-                "data_content"
+                "data_exe",
+                "data_pid"
               ]
             }
           }
@@ -994,7 +975,6 @@
               "windows_event_severity": true,
               "windows_logon_type": true
             },
-            "includeByName": {},
             "indexByName": {
               "_id": 1,
               "agent_ip": 3,
@@ -1008,7 +988,6 @@
             },
             "renameByName": {
               "_id": "EVENT ID",
-              "data_content": "Keys Locations",
               "rule_id": "RULE ID",
               "rule_mitre_tactic": "MITRE TACTIC",
               "rule_mitre_technique": "MITRE TECHNIQUE",
@@ -1027,7 +1006,7 @@
       },
       "editable": true,
       "gridPos": {
-        "h": 22,
+        "h": 23,
         "w": 13,
         "x": 11,
         "y": 0
@@ -1061,7 +1040,7 @@
               "type": "logs"
             }
           ],
-          "query": "data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1193,7 +1172,7 @@
               "type": "max"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1353,7 +1332,7 @@
         "h": 7,
         "w": 7,
         "x": 4,
-        "y": 8
+        "y": 9
       },
       "id": 2,
       "options": {
@@ -1396,7 +1375,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1445,7 +1424,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 10,
         "w": 4,
         "x": 0,
         "y": 13
@@ -1633,7 +1612,7 @@
         "h": 7,
         "w": 7,
         "x": 4,
-        "y": 15
+        "y": 16
       },
       "id": 5,
       "options": {
@@ -1655,7 +1634,7 @@
           "bucketAggs": [
             {
               "fake": true,
-              "field": "data_owner",
+              "field": "data_pid",
               "id": "4",
               "settings": {
                 "min_doc_count": 1,
@@ -1677,7 +1656,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1754,9 +1733,9 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 19,
-        "x": 5,
-        "y": 22
+        "w": 24,
+        "x": 0,
+        "y": 23
       },
       "id": 7,
       "options": {
@@ -1805,7 +1784,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2086,26 +2065,14 @@
                 ]
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "data_flag"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 262
-              }
-            ]
           }
         ]
       },
       "gridPos": {
-        "h": 16,
+        "h": 11,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 34
       },
       "id": 13,
       "options": {
@@ -2119,7 +2086,12 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Date/Time"
+          }
+        ]
       },
       "pluginVersion": "11.1.3",
       "targets": [
@@ -2138,7 +2110,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Collect-SSH-Keys AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:Detect-Unsigned-Processes AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2160,10 +2132,10 @@
                 "_id",
                 "agent_ip",
                 "agent_name",
-                "data_content",
-                "data_file",
-                "data_flag",
-                "data_sha256"
+                "data_pid",
+                "data_cmd",
+                "data_exe",
+                "data_reason"
               ]
             }
           }
@@ -2739,8 +2711,8 @@
     ]
   },
   "timezone": "",
-  "title": "LINUX-COLLECT-SSH-KEYS-COPILOT-ACTION",
-  "uid": "10b909c3-3e23-4253-a2d6-bf8b9e5a829d",
-  "version": 5,
+  "title": "LINUX-DETECT-UNSIGNED-PROCESSES-COPILOT-ACTION",
+  "uid": "e78bc81c-16e9-47ea-bdf8-b4ccf3cf75d5",
+  "version": 7,
   "weekStart": ""
 }

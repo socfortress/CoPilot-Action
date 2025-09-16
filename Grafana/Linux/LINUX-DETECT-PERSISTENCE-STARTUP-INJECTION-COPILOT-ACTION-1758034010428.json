@@ -88,20 +88,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "EDR"
-      ],
-      "targetBlank": true,
-      "title": "",
-      "type": "dashboards"
-    }
-  ],
+  "links": [],
   "liveNow": false,
   "panels": [
     {
@@ -1914,6 +1901,6 @@
   "timezone": "",
   "title": "LINUX-DETECT-PERSISTENCE-STARTUP-INJECTION-COPILOT-ACTION",
   "uid": "595f9045-f752-4274-80c1-87cbff6d6750",
-  "version": 3,
+  "version": 5,
   "weekStart": ""
 }

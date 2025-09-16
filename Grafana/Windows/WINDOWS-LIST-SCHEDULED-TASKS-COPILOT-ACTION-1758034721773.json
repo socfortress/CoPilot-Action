@@ -88,20 +88,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "EDR"
-      ],
-      "targetBlank": true,
-      "title": "",
-      "type": "dashboards"
-    }
-  ],
+  "links": [],
   "liveNow": false,
   "panels": [
     {
@@ -189,7 +176,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -209,7 +196,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
+            "align": "center",
             "cellOptions": {
               "type": "auto"
             },
@@ -475,7 +462,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 7,
         "w": 7,
         "x": 4,
         "y": 0
@@ -516,7 +503,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -534,7 +521,7 @@
           "options": {
             "include": {
               "names": [
-                "data_source"
+                "data_path"
               ]
             }
           }
@@ -987,7 +974,6 @@
               "windows_event_severity": true,
               "windows_logon_type": true
             },
-            "includeByName": {},
             "indexByName": {
               "_id": 1,
               "agent_ip": 3,
@@ -1001,7 +987,6 @@
             },
             "renameByName": {
               "_id": "EVENT ID",
-              "data_source": "Rootkits Locations",
               "rule_id": "RULE ID",
               "rule_mitre_tactic": "MITRE TACTIC",
               "rule_mitre_technique": "MITRE TECHNIQUE",
@@ -1020,7 +1005,7 @@
       },
       "editable": true,
       "gridPos": {
-        "h": 14,
+        "h": 21,
         "w": 13,
         "x": 11,
         "y": 0
@@ -1054,7 +1039,7 @@
               "type": "logs"
             }
           ],
-          "query": "data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1186,7 +1171,7 @@
               "type": "max"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1343,10 +1328,10 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 14,
         "w": 7,
         "x": 4,
-        "y": 9
+        "y": 7
       },
       "id": 2,
       "options": {
@@ -1389,7 +1374,7 @@
               "type": "count"
             }
           ],
-          "query": "data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1438,7 +1423,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 8,
         "w": 4,
         "x": 0,
         "y": 13
@@ -1493,198 +1478,13 @@
               "type": "cardinality"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
       ],
       "title": "AGENTS",
       "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-opensearch-datasource",
-        "uid": "${DS_COPILOT_ACTION}"
-      },
-      "editable": true,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-orange",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Time"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Time"
-              },
-              {
-                "id": "unit",
-                "value": "time: YYYY-MM-DD HH:mm:ss"
-              },
-              {
-                "id": "custom.align"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Count"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "EVENTS"
-              },
-              {
-                "id": "unit",
-                "value": "short"
-              },
-              {
-                "id": "decimals",
-                "value": -1
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background"
-                }
-              },
-              {
-                "id": "custom.align"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "dark-orange",
-                      "value": null
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "rule_groups"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "ALERTS BY TYPE"
-              },
-              {
-                "id": "unit",
-                "value": "short"
-              },
-              {
-                "id": "decimals",
-                "value": -1
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background"
-                }
-              },
-              {
-                "id": "custom.align"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 7,
-        "x": 4,
-        "y": 16
-      },
-      "id": 5,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "11.1.3",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "data_signed",
-              "id": "4",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
-          "datasource": {
-            "type": "grafana-opensearch-datasource",
-            "uid": "${DS_COPILOT_ACTION}"
-          },
-          "metrics": [
-            {
-              "field": "select field",
-              "id": "1",
-              "type": "count"
-            }
-          ],
-          "query": "data_action:Detect-Rootkits AND data_copilot_action:true",
-          "refId": "A",
-          "timeField": "timestamp"
-        }
-      ],
-      "title": "ALERTS BY CATEGORY",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {
-            "reducers": []
-          }
-        }
-      ],
-      "type": "table"
     },
     {
       "datasource": {
@@ -1734,7 +1534,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1747,9 +1548,9 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 20,
-        "x": 4,
-        "y": 23
+        "w": 24,
+        "x": 0,
+        "y": 21
       },
       "id": 7,
       "options": {
@@ -1798,7 +1599,7 @@
               "type": "count"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2086,7 +1887,7 @@
         "h": 16,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 32
       },
       "id": 13,
       "options": {
@@ -2124,7 +1925,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND data_action:Detect-Rootkits AND data_copilot_action:true",
+          "query": "agent_name:$agent_name AND data_action:scheduled_task_history AND data_copilot_action:true",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -2146,10 +1947,9 @@
                 "_id",
                 "agent_ip",
                 "agent_name",
-                "data_from_temp_dir",
-                "data_hidden_from_lsmod",
-                "data_source",
-                "data_signed"
+                "data_task_name",
+                "data_path",
+                "data_result"
               ]
             }
           }
@@ -2725,8 +2525,8 @@
     ]
   },
   "timezone": "",
-  "title": "LINUX-DETECT-ROOTKITS-COPILOT-ACTION",
-  "uid": "72b3e2ce-1b9e-49c9-a93f-557e443d18ef",
-  "version": 4,
+  "title": "WINDOWS-LIST-SCHEDULED-TASKS-COPILOT-ACTION",
+  "uid": "59e595f9-616b-4d6b-baec-d4a156d9b51d",
+  "version": 9,
   "weekStart": ""
 }
