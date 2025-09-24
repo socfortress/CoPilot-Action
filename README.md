@@ -19,6 +19,12 @@ CoPilot Action extends the power of [SOCFortress CoPilot](https://github.com/soc
 
 </h4>
 
+<div align="center">
+
+🎥 **Watch the Tutorial:** [CoPilot Action Setup & Demo](https://youtu.be/l9OLtgemYOQ?si=CrUg9ZeAcGNMADjj)
+
+</div>
+
 ## Table of contents
 
 -   [Overview](#overview)
